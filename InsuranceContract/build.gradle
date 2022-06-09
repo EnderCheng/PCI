@@ -1,0 +1,38 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group 'ca.uwaterloo.ca'
+version '1.0-SNAPSHOT'
+
+repositories {
+    maven {
+        url "https://hyperledger.jfrog.io/hyperledger/fabric-maven"
+    }
+    mavenCentral()
+    maven {
+        url 'https://jitpack.io'
+    }
+}
+
+application {
+    mainClass = 'org.hyperledger.fabric.contract.ContractRouter'
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    compileOnly 'org.hyperledger.fabric-chaincode-java:fabric-chaincode-shim:2.+'
+    testImplementation 'org.hyperledger.fabric-chaincode-java:fabric-chaincode-shim:2.+'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.4.2'
+    testImplementation 'org.assertj:assertj-core:3.11.1'
+    testImplementation 'org.mockito:mockito-core:2.+'
+    implementation 'org.apache.commons:commons-lang3:3.5'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.13.1'
+    implementation files('/Users/cheng/IdeaProjects/Jars/core-4.0-SNAPSHOT.jar','/Users/cheng/IdeaProjects/Jars/commons-math3-3.6.1.jar')
+}
+
+test {
+    useJUnitPlatform()
+}

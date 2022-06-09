@@ -1,0 +1,49 @@
+plugins {
+    // Apply the java plugin to add support for Java
+    id 'java'
+
+    // Apply the application plugin to add support for building a CLI application.
+    id 'application'
+}
+ext {
+    javaMainClass = "ca.uwaterloo.cheng.App"
+}
+
+group 'ca.uwaterloo.cheng'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+    compileOnly 'org.hyperledger.fabric-chaincode-java:fabric-chaincode-shim:2.4.0'
+    testImplementation 'org.hyperledger.fabric-chaincode-java:fabric-chaincode-shim:2.4.0'
+    implementation 'com.google.guava:guava:31.0.1-jre'
+    implementation 'org.slf4j:slf4j-api:1.7.35'
+    implementation 'org.slf4j:slf4j-simple:1.7.35'
+    implementation 'org.hyperledger.fabric:fabric-gateway-java:2.2.2'
+    testImplementation 'org.mockito:mockito-core:4.3.1'
+    implementation 'org.apache.commons:commons-lang3:3.5'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.13.1'
+    implementation files('/Users/cheng/IdeaProjects/Jars/core-4.0-SNAPSHOT.jar','/Users/cheng/IdeaProjects/Jars/commons-math3-3.6.1.jar')
+
+}
+
+application {
+    // Define the main class for the application.
+    mainClassName = 'ca.uwaterloo.cheng.App'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+task runApp(type: Exec) {
+    dependsOn build
+    group = "Execution"
+    description = "Run the main class with ExecTask"
+    commandLine "java", "-classpath", sourceSets.main.runtimeClasspath.getAsPath(), javaMainClass
+}
